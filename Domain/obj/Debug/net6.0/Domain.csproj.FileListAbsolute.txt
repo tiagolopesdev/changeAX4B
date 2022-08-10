@@ -1,0 +1,12 @@
+D:\Downloads\BestLunch\Domain\bin\Debug\net6.0\Domain.deps.json
+D:\Downloads\BestLunch\Domain\bin\Debug\net6.0\Domain.dll
+D:\Downloads\BestLunch\Domain\bin\Debug\net6.0\Domain.pdb
+D:\Downloads\BestLunch\Domain\obj\Debug\net6.0\Domain.csproj.AssemblyReference.cache
+D:\Downloads\BestLunch\Domain\obj\Debug\net6.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Downloads\BestLunch\Domain\obj\Debug\net6.0\Domain.AssemblyInfoInputs.cache
+D:\Downloads\BestLunch\Domain\obj\Debug\net6.0\Domain.AssemblyInfo.cs
+D:\Downloads\BestLunch\Domain\obj\Debug\net6.0\Domain.csproj.CoreCompileInputs.cache
+D:\Downloads\BestLunch\Domain\obj\Debug\net6.0\Domain.dll
+D:\Downloads\BestLunch\Domain\obj\Debug\net6.0\refint\Domain.dll
+D:\Downloads\BestLunch\Domain\obj\Debug\net6.0\Domain.pdb
+D:\Downloads\BestLunch\Domain\obj\Debug\net6.0\ref\Domain.dll
