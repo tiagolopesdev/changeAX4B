@@ -14,6 +14,12 @@ namespace BestLunch.Controllers
         {
             _iUsuarioBAC = iUsuarioBAC;
         }
+        [HttpGet("getFilterUsuario")]
+        public async Task<IActionResult> GetUsuarioFilter()
+        {
+            List<Usuario> usersFilter = await _iUsuarioBAC.GetUsuarioFilter();
+            return Ok(usersFilter);
+        }
 
         [HttpGet("getUsuario")]
         public async Task<IActionResult> GetUsuario()

@@ -3,6 +3,7 @@ using Domain.Interface;
 using Domain.Models;
 using Microsoft.Extensions.Configuration;
 using MySqlConnector;
+using static Dapper.SqlMapper;
 
 namespace Repository.Repository
 {
@@ -30,6 +31,17 @@ namespace Repository.Repository
                 await conexao.ExecuteAsync($"insert into usuarios (nomeUsuario, codigoUsuario) values ('{usuario.NomeUsuario}', {usuario.CodigoUsuario})");
             }
             return new Usuario();
+        }
+
+        public async Task<List<Usuario>> GetUsuarioFilter()
+        {
+            using (var conexao = new MySqlConnection(_conexao))
+            {
+                IEnumerable<Usuario> response = await conexao.QueryAsync<Usuario>("select * from " +
+                    "usuarios u where u.codigoUsuario not in (select " +
+                    "v.idUsuario from votos v);");
+                return response.ToList();
+            }            
         }
     }
 }

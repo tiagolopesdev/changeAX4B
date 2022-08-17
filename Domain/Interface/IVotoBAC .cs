@@ -15,5 +15,6 @@ namespace Domain.Interface
 
         public Task<IEnumerable<Ranking>> GetRanking();
         public Task<Ranking> GetOneRanking();
+        Task<List<Votos>> GetAllVotos();
     }
 }

@@ -1,24 +1,31 @@
 ﻿using Domain.Interface;
 using Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
 
 namespace Domain.BAC
 {
     public class VotosBAC : IVotoBAC
     {
         private IVotoRepo _repo;
-
-        public VotosBAC(IVotoRepo votoRepo)
+        
+ 
+        public VotosBAC(IVotoRepo votoRepo, IUsuarioRepo usuarioRepo)
         {
-            _repo = votoRepo;
+            _repo = votoRepo;           
+        }
+        /*public async Task<List<Votos>> GetAllVotosFilter()
+        {
+             List<>
+        }*/
+        public async Task<List<Votos>> GetAllVotos()
+        {
+            List<Votos> votos = await _repo.GetAllVotos();
+            return votos;
         }
         public async Task<List<Votos>> GetVoto()
-        {
-            return await _repo.GetVoto();
+        {                
+            List<Votos> votos = await _repo.GetVotosDay();
+            return votos;
         }
         public async Task<string> CreateVoto(Votos votos)
         {
@@ -40,6 +47,7 @@ namespace Domain.BAC
             {                
                 throw new Exception("Usuário já votou!");
             }
+
             return await _repo.CreateVoto(votos);
         }
         public async Task<IEnumerable<Ranking>> GetRanking()

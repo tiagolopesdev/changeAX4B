@@ -15,13 +15,19 @@ namespace BestLunch.Controllers
             _ivotoBAC = ivotoBAC;
         }
 
-        [HttpGet("getVotos")]        
-        public async Task<IActionResult> GetVotos()
+        [HttpGet("getVotosDay")]        
+        public async Task<IActionResult> GetVotosDay()
         {
             List<Votos> restaurante = await _ivotoBAC.GetVoto();          
             return Ok(restaurante);
         }
-        
+        [HttpGet("getAllVotos")]
+        public async Task<IActionResult> GetAllVotos()
+        {
+            List<Votos> allVotos = await _ivotoBAC.GetAllVotos();
+            return Ok(allVotos);
+        }
+         
         [HttpPost("cadastrarVotos")]
         public async Task<IActionResult> CreateVotos([FromBody] Votos votos)
         {

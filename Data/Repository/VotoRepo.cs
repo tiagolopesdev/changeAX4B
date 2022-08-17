@@ -19,14 +19,36 @@ namespace Repository.Repository
         {
             _configuracoes = configuracoes;
         }
-        public async Task<List<Votos>> GetVoto()
+        public async Task<List<Votos>> GetAllVotos()
         {
             using (var conexao = new MySqlConnection(_conexao))
             {
-                IEnumerable<Votos> response = await conexao.QueryAsync<Votos>("select * from votos");                
-                return response.ToList();                
-            }
-            
+                string sql = "select * from votos";
+                IEnumerable<Votos> resultSql = await conexao.QueryAsync<Votos>(sql);
+                List<Votos> allVotos = resultSql.ToList();
+                return allVotos;
+            }            
+        }
+        public async Task<List<Votos>> GetVotosDay()
+        {
+            using (var conexao = new MySqlConnection(_conexao))
+            {
+                DateTime dateTime = DateTime.Now;
+
+                GridReader response = await conexao.QueryMultipleAsync($"select * from votos " +
+                    $"where cast(horaVoto as date) = '{dateTime.ToString("yyyy-MM-dd")}';" +
+                    $"select * from usuarios;select * from restaurantes;");
+                List<Votos> votos = response.Read<Votos>().ToList();
+                List<Usuario> usuarios = response.Read<Usuario>().ToList();
+                List<Restaurante> restaurantes = response.Read<Restaurante>().ToList();                                
+
+                votos.ForEach(voto =>
+                {
+                    voto.restaurantes = restaurantes.FirstOrDefault(r => r.codigoRestaurante == voto.idRestaurante);
+                    voto.usuarios = usuarios.FirstOrDefault(u => u.CodigoUsuario == voto.idUsuario);
+                });
+                return votos;                
+            }            
         }
         public async Task<string> CreateVoto(Votos votos)
         {    
@@ -65,10 +87,10 @@ namespace Repository.Repository
                     " INNER JOIN restaurantes r WHERE v.idRestaurante = r.codigoRestaurante" +
                     " GROUP BY v.idRestaurante";
                 IEnumerable<Ranking> result = await conexao.QueryAsync<Ranking>(sql);
-                List<Ranking> rankings = result.ToList();
+                List<Ranking> rankings = result.OrderByDescending(order => order.QntVotos).ToList();
                 Ranking getFirstElement = rankings.First();
                 return getFirstElement;
             }
-        }
+        }        
     }
 }
